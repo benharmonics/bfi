@@ -35,7 +35,11 @@ fn run(program: Vec<char>, buf: &mut BufWriter<Stdout>) {
                     data_pointer -= 1
                 }
             }
-            '+' => data[data_pointer] += 1,
+            '+' => {
+                if data[data_pointer] < 255 {
+                    data[data_pointer] += 1
+                }
+            }
             '-' => {
                 if data[data_pointer] > 0 {
                     data[data_pointer] -= 1
