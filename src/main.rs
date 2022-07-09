@@ -2,9 +2,8 @@ use std::io::{self, BufWriter, Read, Stdout, Write};
 use std::{env, fs};
 
 fn main() {
-    let program = program();
     let mut buf = BufWriter::new(io::stdout());
-    run(program, &mut buf);
+    run(program(), &mut buf);
     buf.write_all(&[b'\n']).unwrap();
     buf.flush().unwrap();
 }
@@ -53,13 +52,12 @@ fn run(program: Vec<char>, buf: &mut BufWriter<Stdout>) {
             }
             ',' => {
                 println!("Input a char: ");
-                let input: char = io::stdin()
+                let input = io::stdin()
                     .bytes()
                     .next()
                     .and_then(|res| res.ok())
-                    .map(|byte| byte as char)
                     .unwrap();
-                data[data_pointer] = input as u8;
+                data[data_pointer] = input;
             }
             '[' => {
                 if data[data_pointer] == 0 {
