@@ -4,7 +4,7 @@ use std::{env, fs, process};
 fn main() {
     let mut buf = BufWriter::new(io::stdout());
     run(program(), &mut buf);
-    buf.write_all(&[b'\n']).unwrap();   // newline for formatting
+    buf.write_all(&[b'\n']).unwrap(); // newline for formatting
     buf.flush().unwrap();
 }
 
@@ -132,8 +132,8 @@ mod tests {
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
         let (data, _) = buf.buffer().split_at(12);
-        let data: String = data.iter().map(|byte| *byte as char).collect();
-        assert_eq!(String::from("Hello World!"), data);
+        let received: String = data.iter().map(|byte| *byte as char).collect();
+        assert_eq!(String::from("Hello World!"), received);
     }
 
     #[test]
@@ -201,5 +201,16 @@ mod tests {
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
         assert_eq!(b'8', *buf.buffer().first().unwrap());
+    }
+
+    #[test]
+    fn it_wont_go_too_far_right() {
+        let file = fs::read_to_string("tests/test5.b").unwrap();
+        let program = file.chars().collect();
+        let mut buf = BufWriter::new(io::stdout());
+        run(program, &mut buf);
+        let (data, _) = buf.buffer().split_at(12);
+        let received: String = data.iter().map(|byte| *byte as char).collect();
+        assert_eq!(String::from("30001 moves!"), received);
     }
 }
