@@ -61,11 +61,15 @@ fn run(program: Vec<char>, buf: &mut BufWriter<Stdout>) {
             '+' => {
                 if data[data_pointer] < 255 {
                     data[data_pointer] += 1
+                } else {
+                    data[data_pointer] = 0
                 }
             }
             '-' => {
                 if data[data_pointer] > 0 {
                     data[data_pointer] -= 1
+                } else {
+                    data[data_pointer] = 255
                 }
             }
             '.' => {
@@ -194,20 +198,20 @@ mod tests {
     }
 
     #[test]
-    fn it_wont_overflow() {
+    fn it_will_overflow() {
         let file = fs::read_to_string("tests/test4.b").unwrap();
         let program = file.chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
-        assert_eq!(255, *buf.buffer().first().unwrap());
+        assert_eq!(0, *buf.buffer().first().unwrap());
     }
 
     #[test]
-    fn it_wont_underflow() {
+    fn it_will_underflow() {
         let program = "-.".chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
-        assert_eq!(0, *buf.buffer().first().unwrap());
+        assert_eq!(255, *buf.buffer().first().unwrap());
     }
 
     #[test]
