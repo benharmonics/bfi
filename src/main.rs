@@ -48,7 +48,7 @@ fn run(program: Vec<char>, buf: &mut BufWriter<Stdout>) {
                 buf.write_all(&[data[data_pointer]]).unwrap();
                 if !cfg!(test) {
                     buf.flush().unwrap()
-                };
+                }
             }
             ',' => {
                 println!("Input a char: ");
@@ -57,7 +57,7 @@ fn run(program: Vec<char>, buf: &mut BufWriter<Stdout>) {
                     .next()
                     .and_then(|res| res.ok())
                     .unwrap();
-                data[data_pointer] = input;
+                data[data_pointer] = input
             }
             '[' => {
                 if data[data_pointer] == 0 {
@@ -86,12 +86,12 @@ fn run(program: Vec<char>, buf: &mut BufWriter<Stdout>) {
                         open_braces -= 1
                     }
                 }
-                prog_pointer -= 1;
+                prog_pointer -= 1
             }
             _ => {}
         }
         // increment the program pointer every loop
-        prog_pointer += 1;
+        prog_pointer += 1
     }
 }
 
