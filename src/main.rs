@@ -17,12 +17,18 @@ fn program() -> Vec<char> {
         process::exit(0);
     }
     if args.contains(&"-h".to_string()) || args.contains(&"--help".to_string()) {
+        println!("bfi - a Brainfuck Interpreter");
+        println!("  author: benharmonics");
+        println!("  https://github.com/benharmonics/bfi");
         println!("USAGE:");
         println!("          bfi <FILE> to read from a file");
         println!("          bfi '<PROG>' to input a program directly");
         println!("EXAMPLES:");
-        println!("          bfi '+++++++[>+++++++<-]>+++.--.--.'");
+        println!("        > bfi '+++++++[>+++++++<-]>+++.--.--.'");
         println!("  output: 420");
+        println!("        > echo '+++++++[>+++++++++>+++++++<<-]>---.>++.' > file.b");
+        println!("        > bfi file.b");
+        println!("  output: <3");
         process::exit(0);
     }
     fs::read_to_string(&args[1])
