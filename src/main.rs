@@ -139,6 +139,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore] // has a super long output
     fn it_prints_0_to_999() {
         let file = fs::read_to_string("tests/test2.b").unwrap();
         let program: Vec<char> = file.chars().collect();
@@ -160,5 +161,14 @@ mod tests {
             expected.push_str(&next_num);
         }
         assert_eq!(expected, s);
+    }
+
+    #[test]
+    fn it_wont_overflow() {
+        let file = fs::read_to_string("tests/test4.b").unwrap();
+        let program: Vec<char> = file.chars().collect();
+        let mut buf = BufWriter::new(io::stdout());
+        run(program, &mut buf);
+        assert_eq!(255, *buf.buffer().first().unwrap());
     }
 }
