@@ -26,9 +26,9 @@ fn program() -> Vec<char> {
         println!("EXAMPLES:");
         println!("        > bfi '+++++++[>+++++++<-]>+++.--.--.'");
         println!("  output: 420");
-        println!("        > echo '+++++++[>+++++++++>+++++++<<-]>---.>++.' > file.b");
+        println!("        > echo '++++++++[>+++++++<-]>++.-------.' > file.b");
         println!("        > bfi file.b");
-        println!("  output: <3");
+        println!("  output: :3");
         process::exit(0);
     }
     fs::read_to_string(&args[1])
