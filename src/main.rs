@@ -47,11 +47,15 @@ fn run(program: Vec<char>, buf: &mut BufWriter<Stdout>) {
             '>' => {
                 if data_pointer < data.len() {
                     data_pointer += 1
+                } else {
+                    data_pointer = 0
                 }
             }
             '<' => {
                 if data_pointer > 0 {
                     data_pointer -= 1
+                } else {
+                    data_pointer = 255
                 }
             }
             '+' => {
@@ -132,8 +136,19 @@ mod tests {
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
         let (data, _) = buf.buffer().split_at(12);
-        let received: String = data.iter().map(|byte| *byte as char).collect();
+        let received: String = data.iter().map(|byte| char::from(*byte)).collect();
         assert_eq!(String::from("Hello World!"), received);
+    }
+
+    #[test]
+    fn it_reads_nested_loops(){
+        let s = "+[-[<<[+[--->]-[<<<]]]>>>-]>-.---.>..>.<<<<-.<+.>>>>>.>.<<.<-.";
+        let program = String::from(s).chars().collect();
+        let mut buf = BufWriter::new(io::stdout());
+        run(program, &mut buf);
+        let (data, _) = buf.buffer().split_at(11);
+        let received: String = data.iter().map(|byte| char::from(*byte)).collect();
+        assert_eq!(String::from("hello world"), received);
     }
 
     #[test]
@@ -210,7 +225,7 @@ mod tests {
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
         let (data, _) = buf.buffer().split_at(12);
-        let received: String = data.iter().map(|byte| *byte as char).collect();
+        let received: String = data.iter().map(|byte| char::from(*byte)).collect();
         assert_eq!(String::from("30001 moves!"), received);
     }
 }
