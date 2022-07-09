@@ -5,6 +5,7 @@ fn main() {
     let program = program();
     let mut buf = BufWriter::new(io::stdout());
     run(program, &mut buf);
+    buf.write(&[b'\n']).unwrap();
     buf.flush().unwrap();
 }
 
