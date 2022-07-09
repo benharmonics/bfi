@@ -52,11 +52,7 @@ fn run(program: Vec<char>, buf: &mut BufWriter<Stdout>) {
             }
             ',' => {
                 println!("Input a char: ");
-                let input = io::stdin()
-                    .bytes()
-                    .next()
-                    .and_then(|res| res.ok())
-                    .unwrap();
+                let input = io::stdin().bytes().next().and_then(|res| res.ok()).unwrap();
                 data[data_pointer] = input
             }
             '[' => {
