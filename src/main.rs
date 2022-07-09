@@ -97,7 +97,7 @@ mod tests {
 
     #[test]
     fn it_prints_a_dollar_sign() {
-        let program: Vec<char> = "++++++++++++++++++++++++++++++++++++.".chars().collect();
+        let program = "++++++++++++++++++++++++++++++++++++.".chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
         assert_eq!('$', *buf.buffer().first().unwrap() as char);
@@ -117,6 +117,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore] // has a super long output
     fn it_prints_0_to_99() {
         let file = fs::read_to_string("tests/test1.b").unwrap();
         let program: Vec<char> = file.chars().collect();
@@ -164,5 +165,21 @@ mod tests {
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
         assert_eq!(255, *buf.buffer().first().unwrap());
+    }
+
+    #[test]
+    fn it_wont_underflow() {
+        let program = "-.".chars().collect();
+        let mut buf = BufWriter::new(io::stdout());
+        run(program, &mut buf);
+        assert_eq!(0, *buf.buffer().first().unwrap());
+    }
+
+    #[test]
+    fn it_wont_go_too_far_left() {
+        let program = "<<<<<<<<<+++++++[>++++++++<-]>.".chars().collect();
+        let mut buf = BufWriter::new(io::stdout());
+        run(program, &mut buf);
+        assert_eq!(b'8', *buf.buffer().first().unwrap());
     }
 }
