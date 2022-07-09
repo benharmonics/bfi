@@ -108,7 +108,7 @@ mod tests {
         let s1 = "++++++++++[>+++++++>++++++++++>+++>+";
         let s2 = "<<<<-]>++.>+.+++++++..+++.>++.<<++++";
         let s3 = "+++++++++++.>.+++.------.--------.>+.>.";
-        let program: Vec<char> = format!("{s1}{s2}{s3}").chars().collect();
+        let program = format!("{s1}{s2}{s3}").chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
         let (data, _) = buf.buffer().split_at(12);
@@ -120,7 +120,7 @@ mod tests {
     #[ignore] // has a super long output
     fn it_prints_0_to_99() {
         let file = fs::read_to_string("tests/test1.b").unwrap();
-        let program: Vec<char> = file.chars().collect();
+        let program = file.chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
         let mut s = String::new();
@@ -137,11 +137,9 @@ mod tests {
     #[ignore] // has a super long output
     fn it_prints_0_to_999() {
         let file = fs::read_to_string("tests/test2.b").unwrap();
-        let program: Vec<char> = file.chars().collect();
+        let program = file.chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
-        let mut s = String::new();
-        buf.buffer().read_to_string(&mut s).unwrap();
         let mut expected = String::new();
         for i in 0..=9 {
             let next_num = format!("00{i}\n");
@@ -155,13 +153,15 @@ mod tests {
             let next_num = format!("{i}\n");
             expected.push_str(&next_num);
         }
+        let mut s = String::new();
+        buf.buffer().read_to_string(&mut s).unwrap();
         assert_eq!(expected, s);
     }
 
     #[test]
     fn it_wont_overflow() {
         let file = fs::read_to_string("tests/test4.b").unwrap();
-        let program: Vec<char> = file.chars().collect();
+        let program = file.chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
         assert_eq!(255, *buf.buffer().first().unwrap());
