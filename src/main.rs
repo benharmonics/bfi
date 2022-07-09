@@ -1,16 +1,30 @@
 use std::io::{self, BufWriter, Read, Stdout, Write};
-use std::{env, fs};
+use std::{env, fs, process};
 
 fn main() {
     let mut buf = BufWriter::new(io::stdout());
     run(program(), &mut buf);
-    buf.write_all(&[b'\n']).unwrap();
+    buf.write_all(&[b'\n']).unwrap();   // newline for formatting
     buf.flush().unwrap();
 }
 
 fn program() -> Vec<char> {
     let commands = vec!['>', '<', '+', '-', '.', ',', '[', ']'];
     let args: Vec<_> = env::args().collect();
+    if args.len() == 1 {
+        println!("USAGE:    bfi <INPUT>");
+        println!("  `bfi -h` or `bfi --help` for help");
+        process::exit(0);
+    }
+    if args.contains(&"-h".to_string()) || args.contains(&"--help".to_string()) {
+        println!("USAGE:");
+        println!("          bfi <FILE> to read from a file");
+        println!("          bfi '<PROG>' to input a program directly");
+        println!("EXAMPLES:");
+        println!("          bfi '+++++++[>+++++++<-]>+++.--.--.'");
+        println!("  output: 420");
+        process::exit(0);
+    }
     fs::read_to_string(&args[1])
         .unwrap_or_else(|_| String::from(&args[1]))
         .chars()
