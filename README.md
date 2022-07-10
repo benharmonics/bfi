@@ -2,6 +2,8 @@
 
 Interprets [Brainfuck](http://www.muppetlabs.com/~breadbox/bf/) scripts
 
+Thanks to [www.brainfuck.org](www.brainfuck.org) for many of the tests I've blatantly stolen.
+
 ## Usage:
 
 ```bash
