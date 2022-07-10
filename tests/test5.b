@@ -1,9 +1,7 @@
 60 moves to the right on each line times 500 lines
     = 30000 moves to the right
-plus 1
-    = 30001 moves to the right: you'd expect a panic!
-      But it just wraps back around to the left side
-      of the data
+Let's move just about there and then perform an operation that wraps
+across the end of the program's data
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        1  
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        2  
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        3  
@@ -503,7 +501,16 @@ plus 1
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>      497
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>      498
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>      499
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>      500
->       plus one!
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>       500
 
-++++++++[>++++++++<-]>+[->+>+<<]>>[-<<+>>]<<.>.
+We should be one from the end of the data now:
+_____________________________________________________________________
+
+ ``` | 29996 | 29997 | 29998 | 29999 |   0   |   1   |   2   |  ```
+_________________________________^___________________________________
+
++++++++++++++++++++++++++++++++++        write '!' to cell 29999
+the next line won't work if it doesn't wrap around on the right:
+>+++++++++++++++++++++++++++++++++       write '!' to cell 0
+the next line won't work if it doesn't wrap around on the left:
+.<.                                      print '!!'

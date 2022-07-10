@@ -55,7 +55,7 @@ fn run(program: Vec<char>, buf: &mut BufWriter<Stdout>) {
                 if data_pointer > 0 {
                     data_pointer -= 1
                 } else {
-                    data_pointer = 255
+                    data_pointer = data.len() - 1
                 }
             }
             '+' => {
@@ -217,25 +217,13 @@ mod tests {
     }
 
     #[test]
-    fn it_wraps_around_on_the_left() {
-        let s1 = "<<++++++++[>++++++++<-]>+";
-        let s2 = "[->+>+<<]>>[-<<+>>]<<.>.";
-        let program = format!("{s1}{s2}").chars().collect();
-        let mut buf = BufWriter::new(io::stdout());
-        run(program, &mut buf);
-        let (data, _) = buf.buffer().split_at(2);
-        let received: String = data.iter().map(|byte| char::from(*byte)).collect();
-        assert_eq!(String::from("AA"), received);
-    }
-
-    #[test]
-    fn it_wraps_around_on_the_right() {
+    fn it_wraps_around() {
         let file = fs::read_to_string("tests/test5.b").unwrap();
         let program = file.chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
         let (data, _) = buf.buffer().split_at(2);
         let received: String = data.iter().map(|byte| char::from(*byte)).collect();
-        assert_eq!(String::from("AA"), received);
+        assert_eq!(String::from("!!"), received);
     }
 }
