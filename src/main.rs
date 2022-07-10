@@ -222,8 +222,8 @@ mod tests {
         let program = file.chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
-        let (data, _) = buf.buffer().split_at(2);
+        let (data, _) = buf.buffer().split_at(3);
         let received: String = data.iter().map(|byte| char::from(*byte)).collect();
-        assert_eq!(String::from("!!"), received);
+        assert_eq!(String::from("!!!"), received);
     }
 }

@@ -1,7 +1,12 @@
+check if the interpreter wraps correctly
+
++++++++++++++++++++++++++++++++++        write '!' to cell 0
+
 60 moves to the right on each line times 500 lines
     = 30000 moves to the right
 Let's move just about there and then perform an operation that wraps
-across the end of the program's data
+across the end of the program's data (after writing to cell 0)
+
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        1  
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        2  
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        3  
@@ -509,8 +514,11 @@ _____________________________________________________________________
  ``` | 29996 | 29997 | 29998 | 29999 |   0   |   1   |   2   |  ```
 _________________________________^___________________________________
 
-+++++++++++++++++++++++++++++++++        write '!' to cell 29999
-the next line won't work if it doesn't wrap around on the right:
->+++++++++++++++++++++++++++++++++       write '!' to cell 0
-the next line won't work if it doesn't wrap around on the left:
-.<.                                      print '!!'
++++++++++++++++++++++++++++++++++             write '!' to cell 29999
+
+the final lines won't work unless it wraps around from 29999 to 0 (so 
+that it can read cell 0 = '!') and from 0 to 29999 (where it can read 
+the value we just wrote into that cell):
+
+.>.<.   print '!!!'
+
