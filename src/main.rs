@@ -74,6 +74,8 @@ fn run(program: Vec<char>, buf: &mut BufWriter<Stdout>) {
             }
             '.' => {
                 buf.write_all(&[data[data_pointer]]).unwrap();
+                // tests require that the buffer be flushed all at once
+                // is this a good way to implement this?
                 if !cfg!(test) {
                     buf.flush().unwrap()
                 }
