@@ -1,4 +1,4 @@
-use std::io::{self, BufWriter, Read, Stdout, Write};
+use std::io::{self, BufWriter, Stdout, Write};
 use std::{env, fs, process};
 
 fn main() {
@@ -82,8 +82,15 @@ fn run(program: Vec<char>, buf: &mut BufWriter<Stdout>) {
             }
             ',' => {
                 println!("Input a char: ");
-                let input = io::stdin().bytes().next().and_then(|res| res.ok()).unwrap();
-                data[data_pointer] = input
+                let mut line = String::new();
+                io::stdin()
+                    .read_line(&mut line)
+                    .expect("Failed to read line.");
+                let byte = line
+                    .chars()
+                    .next()
+                    .unwrap_or_else(|| char::from(data[data_pointer]));
+                data[data_pointer] = byte as u8
             }
             '[' => {
                 if data[data_pointer] == 0 {
@@ -147,7 +154,7 @@ mod tests {
     }
 
     #[test]
-    fn it_reads_nested_loops(){
+    fn it_reads_nested_loops() {
         let s = "+[-[<<[+[--->]-[<<<]]]>>>-]>-.---.>..>.<<<<-.<+.>>>>>.>.<<.<-.";
         let program = String::from(s).chars().collect();
         let mut buf = BufWriter::new(io::stdout());
