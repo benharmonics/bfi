@@ -215,21 +215,25 @@ mod tests {
     }
 
     #[test]
-    fn it_wont_go_too_far_left() {
-        let program = "<<<<<<<<<+++++++[>++++++++<-]>.".chars().collect();
+    fn it_wraps_around_on_the_left() {
+        let s1 = "<<++++++++[>++++++++<-]>+";
+        let s2 = "[->+>+<<]>>[-<<+>>]<<.>.";
+        let program = format!("{s1}{s2}").chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
-        assert_eq!(b'8', *buf.buffer().first().unwrap());
+        let (data, _) = buf.buffer().split_at(2);
+        let received: String = data.iter().map(|byte| char::from(*byte)).collect();
+        assert_eq!(String::from("AA"), received);
     }
 
     #[test]
-    fn it_wont_go_too_far_right() {
+    fn it_wraps_around_on_the_right() {
         let file = fs::read_to_string("tests/test5.b").unwrap();
         let program = file.chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
-        let (data, _) = buf.buffer().split_at(12);
+        let (data, _) = buf.buffer().split_at(2);
         let received: String = data.iter().map(|byte| char::from(*byte)).collect();
-        assert_eq!(String::from("30001 moves!"), received);
+        assert_eq!(String::from("AA"), received);
     }
 }
