@@ -45,7 +45,7 @@ fn run(program: Vec<char>, buf: &mut BufWriter<Stdout>) {
     while prog_pointer < program.len() {
         match program[prog_pointer] {
             '>' => {
-                if data_pointer < data.len() {
+                if data_pointer < data.len() - 1 {
                     data_pointer += 1
                 } else {
                     data_pointer = 0
