@@ -131,6 +131,7 @@ fn run(program: Vec<char>, buf: &mut BufWriter<Stdout>) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use io::Read;
 
     #[test]
     fn it_prints_a_dollar_sign() {
