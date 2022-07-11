@@ -218,7 +218,7 @@ mod tests {
         let program = file.chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
-        assert_eq!(0, *buf.buffer().first().unwrap());
+        assert_eq!(1, *buf.buffer().first().unwrap());
     }
 
     #[test]
