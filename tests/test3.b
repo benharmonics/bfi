@@ -6,7 +6,7 @@ more than 255 times; it just overflows to zero without a panic
 ++++++++++++++++++++++++++++++++++++++++++++++++++      50 increments
 ++++++++++++++++++++++++++++++++++++++++++++++++++      50 increments
 ++++++++++++++++++++++++++++++++++++++++++++++++++      50 increments
-+++++++.                                                 6 increments
++++++++.                                                 7 increments
                                                        ______________
                                                       = 257 increments
                                                        (should overflow
