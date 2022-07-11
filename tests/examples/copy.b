@@ -43,15 +43,15 @@ to create a "conservative copy illusion"
 
 Let's see our two copies of A:
 
-<<.   cell 0
->.    cell 1
+<<.   cell 0 contains 'A'
+>.    cell 1 contains 'B'
 >.    cell 2 is now zero!
 
 ============================================================
 Let's see that again
 
 Printing a newline & setting up B (ASCII 66) on cell 3:
-++++++++++.[>+++++++<-]>----
+++++++++++.+[>++++++<-]>
 
 The cursor has been left on 'B'
 
