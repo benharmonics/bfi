@@ -50,10 +50,10 @@ Let's see our two copies of A:
 ============================================================
 Let's see that again
 
-Printing a newline & setting up B (ASCII 66) on cell 2:
+Printing a newline & setting up B (ASCII 66) on cell 3:
 ++++++++++.[>+++++++<-]>----
 
-The cursor has been left on 'B' in cell 2
+The cursor has been left on 'B'
 
 Minified:
 
