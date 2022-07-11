@@ -22,7 +22,7 @@ print linefeed: >++++++++++.[-]<
 copy A (in Cell 0) into Cells 1 and 2
 
 note that Cell 0 is deleted;
-copying is a destructive operation
+copying is a destructive operation!
 
 [     while A is not null
   -   decrease A
@@ -31,7 +31,7 @@ copying is a destructive operation
   <<  go back to A
 ]     loop
 
-You can then move Cell 3 into Cell 1
+You can then move Cell 2 into Cell 0
 to create a "conservative copy illusion"
 
 >>    go to cell 2 
@@ -48,10 +48,14 @@ Let's see our two copies of A:
 >.    cell 2 is now zero!
 
 ============================================================
-Printing a newline & setting up B (ASCII 66) on cell 2
->++++++++++.[-]<++++++++[>++++++++<-]>++
+Let's see that again
 
-In one line the copy function is:
+Printing a newline & setting up B (ASCII 66) on cell 2:
+++++++++++.[>+++++++<-]>----
 
-[->+>+<<]>>[-<<+>>]<<   copy & move
-.>.                     print
+The cursor has been left on 'B' in cell 2
+
+Minified:
+
+    [->+>+<<]>>[-<<+>>]<<   copy & move
+    .>.                     print
