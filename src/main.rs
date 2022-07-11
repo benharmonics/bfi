@@ -81,7 +81,8 @@ fn run(program: Vec<char>, buf: &mut BufWriter<Stdout>) {
                 }
             }
             ',' => {
-                println!("Input a char: ");
+                buf.write_all(b"Input a char: ").unwrap();
+                buf.flush().unwrap();
                 let mut line = String::new();
                 io::stdin()
                     .read_line(&mut line)
