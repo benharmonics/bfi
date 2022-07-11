@@ -135,6 +135,7 @@ mod tests {
 
     #[test]
     fn it_prints_a_dollar_sign() {
+        // dollar sign is ASCII 36
         let program = "++++++++++++++++++++++++++++++++++++.".chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
@@ -143,6 +144,7 @@ mod tests {
 
     #[test]
     fn it_prints_hello_world() {
+        // https://tnu.me/brainfuck/generator
         let s1 = "++++++++++[>+++++++>++++++++++>+++>+";
         let s2 = "<<<<-]>++.>+.+++++++..+++.>++.<<++++";
         let s3 = "+++++++++++.>.+++.------.--------.>+.>.";
@@ -156,6 +158,7 @@ mod tests {
 
     #[test]
     fn it_reads_nested_loops() {
+        // prints 'hello world'... don't ask me to explain it
         let s = "+[-[<<[+[--->]-[<<<]]]>>>-]>-.---.>..>.<<<<-.<+.>>>>>.>.<<.<-.";
         let program = String::from(s).chars().collect();
         let mut buf = BufWriter::new(io::stdout());
@@ -209,7 +212,9 @@ mod tests {
 
     #[test]
     fn it_will_overflow() {
-        let file = fs::read_to_string("tests/test4.b").unwrap();
+        // the file increments cell 0 256 times and prints the value,
+        // which should be 0 because 255 + 1 should overflow
+        let file = fs::read_to_string("tests/test3.b").unwrap();
         let program = file.chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
@@ -218,6 +223,7 @@ mod tests {
 
     #[test]
     fn it_will_underflow() {
+        // subtracting 1 from 0 should underflow yielding 255
         let program = "-.".chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);
@@ -226,7 +232,9 @@ mod tests {
 
     #[test]
     fn it_wraps_around() {
-        let file = fs::read_to_string("tests/test5.b").unwrap();
+        // moving left from cell 0 should put you in cell 29999
+        // moving right from cell 29999 should put you in cell 0
+        let file = fs::read_to_string("tests/test4.b").unwrap();
         let program = file.chars().collect();
         let mut buf = BufWriter::new(io::stdout());
         run(program, &mut buf);

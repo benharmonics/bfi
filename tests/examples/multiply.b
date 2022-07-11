@@ -14,7 +14,8 @@ ________________________________________________________
 || <<<<<++++++++[>++++++++<-]>+      Write letter 'A' ||
 || [->+>+>+<<<]           Copy 'A' into cells 5 6 & 7 ||
 || >>+>----         Set cell 6 to 'B' & cell 7 to '=' || 
-|| >++++++++++<<<<<<<  Linefeed & move back to cell 0 ||
+|| >++++++++++       Set cell 8 to LineFeed (newline) ||
+|| <<<<<<<                        Move back to cell 0 ||
 ||         So we have: (0 0 0 0 'A' B' '=' LF)        ||
 ||                      ^                             ||
 ========================================================
@@ -76,14 +77,15 @@ Minified:
 [>[->+>+<<]>[-<+>]<<-]
 
 >>>>.>.>.<<<.>>>>.  print 'AB=&'                    OUTPUT
-<<<<[-]<<<       clearing cell 3 
-++             reset cell 0 to 2
 
 Final state:
     Memory: (0 B 0 A*B)
     Cursor: on first cell
     Input: unchanged
     Output: unchanged
+     
+<<<<[-]<<<       clearing cell 3 
+++             reset cell 0 to 2
 
 Optional cleansing:
     Move result to first cell
